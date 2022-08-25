@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'GT-Walsheim', 'Open Sans', sans-serif;
+        }
+
+        p {
+            color: #333333;
+        }
+
+        .myButton {
+            background-color: #e6305d;
+            border-radius: 28px;
+            border: 1px solid #bf0f3e;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 17px;
+            padding: 16px 31px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #8f2843;
+        }
+
+        .myButton:hover {
+            background-color: #e6305d;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+    </style>
+    <title>Beable SSO Launch</title>
+</head>
+
+<body>
+    <script>
+        let redirectUrl;
+        window.onload = function () {
+            try {
+                var url_string = (window.location.href).toLowerCase();
+                console.log('inc url: ' + url_string);
+                var url = new URL(url_string);
+                console.log('url: ' + url);
+                url.searchParams.forEach(function (value, key) {
+                    console.log(key, value);
+                });
+                redirectUrl = url.searchParams.get('redirecturl');
+                console.log('redirecturl: ' + redirectUrl);
+                var errorMessage = url.searchParams.get('errorMessage');
+                var errorCode = url.searchParams.get('errorCode');
+                console.log(redirectUrl + ' and ' + errorMessage + ' and ' + errorCode);
+            } catch (err) {
+                console.log('Error parsing')
+                console.log(err);
+            }
+        }
+
+        function launchApp() {
+            if (redirectUrl) {
+                window.open(
+                    redirectUrl, "_blank");
+            } else {
+                console.log('No redirect url is set');
+            }
+        }
+    </script>
+    <h1 style="text-align:center; color: #333333;">Welcome to Beable!</h1>
+
+    <p>&nbsp;</p>
+
+    <p style="text-align:center; color: #333333;">Launch the application by clicking on the button below</p>
+    <p style="text-align:center">
+        <a href="#" class="myButton" onclick="launchApp()">Launch application</a>
+    </p>
+</body>
+
+</html>

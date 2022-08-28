@@ -42,18 +42,26 @@
         let redirectUrl;
         window.onload = function () {
             try {
-                var url_string = (window.location.href).toLowerCase();
+                let url_string = (window.location.href).toLowerCase();
                 console.log('inc url: ' + url_string);
-                var url = new URL(url_string);
+                let url = new URL(url_string);
                 console.log('url: ' + url);
                 url.searchParams.forEach(function (value, key) {
                     console.log(key, value);
                 });
-                redirectUrl = url.searchParams.get('redirecturl');
+                let redirectUrl = url.searchParams.get('redirecturl');
+                let errorCode = url.searchParams.get('errorcode');
+                let errorMessage = url.searchParams.get('errormessage');
+                let ticketId = url.searchParams.get('ticketId');
                 console.log('redirecturl: ' + redirectUrl);
-                var errorMessage = url.searchParams.get('errorMessage');
-                var errorCode = url.searchParams.get('errorCode');
-                console.log(redirectUrl + ' and ' + errorMessage + ' and ' + errorCode);
+                console.log(redirectUrl + ' and ' + errorMessage + ' and ' + errorCode  + ' and ' + ticketId);
+
+                if(errorMessage) {
+                    document.getElementById('errorMessageP').innerHTML = errorMessage;
+                }
+                if(errorCode) {
+                    document.getElementById('errorCodeP').innerHTML = errorCode;
+                }
             } catch (err) {
                 console.log('Error parsing')
                 console.log(err);
@@ -61,7 +69,7 @@
         }
 
         function launchApp() {
-            if (redirectUrl) {
+            if (redirectUrl && !errorMessage) {
                 window.open(
                     redirectUrl, "_blank");
             } else {
@@ -77,6 +85,8 @@
     <p style="text-align:center">
         <a href="#" class="myButton" onclick="launchApp()">Launch application</a>
     </p>
+    <p id="errorMessageP" style="text-align:center; color: red;"></p>
+    <p id="errorCodeP" style="text-align:center; color: red;"></p>
 </body>
 
 </html>

@@ -40,6 +40,9 @@
 <body>
     <script>
         let redirectUrl;
+        let errorCode;
+        let errorMessage;
+        let ssoResult;
         window.onload = function () {
             try {
                 let url_string = (window.location.href).toLowerCase();
@@ -49,10 +52,10 @@
                 url.searchParams.forEach(function (value, key) {
                     console.log(key, value);
                 });
-                let redirectUrl = url.searchParams.get('redirecturl');
-                let errorCode = url.searchParams.get('errorcode');
-                let errorMessage = url.searchParams.get('errormessage');
-                let ticketId = url.searchParams.get('ticketId');
+                redirectUrl = url.searchParams.get('redirecturl');
+                errorCode = url.searchParams.get('errorcode');
+                errorMessage = url.searchParams.get('errormessage');
+                ssoResult = url.searchParams.get('ssoResult');
                 console.log('redirecturl: ' + redirectUrl);
                 console.log(redirectUrl + ' and ' + errorMessage + ' and ' + errorCode  + ' and ' + ticketId);
 
@@ -69,7 +72,7 @@
         }
 
         function launchApp() {
-            if (redirectUrl) {
+            if (redirectUrl && !errorMessage) {
                 window.open(redirectUrl, "_blank");
             } else {
                 console.log('No redirect url is set');

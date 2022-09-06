@@ -46,18 +46,18 @@
         window.onload = function () {
             try {
                 let url_string = (window.location.href).toLowerCase();
-                console.log('inc url: ' + url_string);
+                // console.log('inc url: ' + url_string);
                 let url = new URL(url_string);
-                console.log('url: ' + url);
-                url.searchParams.forEach(function (value, key) {
-                    console.log(key, value);
-                });
+                // console.log('url: ' + url);
+                // url.searchParams.forEach(function (value, key) {
+                //     console.log(key, value);
+                // });
                 redirectUrl = url.searchParams.get('redirecturl');
                 errorCode = url.searchParams.get('errorcode');
                 errorMessage = url.searchParams.get('errormessage');
-                ssoResult = url.searchParams.get('ssoResult');
-                console.log('redirecturl: ' + redirectUrl);
-                console.log(redirectUrl + ' and ' + errorMessage + ' and ' + errorCode  + ' and ' + ticketId);
+                ssoResult = url.searchParams.get('ssoresult');
+                // console.log('redirecturl: ' + redirectUrl);
+                //console.log(redirectUrl + ' and ' + errorMessage + ' and ' + errorCode  + ' and ' + ticketId);
 
                 if(errorMessage) {
                     document.getElementById('errorMessageP').innerHTML = errorMessage;
@@ -72,9 +72,10 @@
         }
 
         function launchApp() {
-            if (redirectUrl && !errorMessage) {
+            if (redirectUrl && ssoResult == 1) {
                 window.open(redirectUrl, "_blank");
             } else {
+                document.getElementById('errorMessageP').innerHTML = 'There was a problem while trying to log in. Please contact Beable support.';
                 console.log('No redirect url is set');
             }
         }
@@ -87,8 +88,8 @@
     <p style="text-align:center">
         <a href="#" class="myButton" onclick="launchApp()">Launch application</a>
     </p>
-    <p id="errorMessageP" style="text-align:center; color: red;"></p>
-    <p id="errorCodeP" style="text-align:center; color: red;"></p>
+    <p id="errorMessageP" style="text-align:center; color: #C70039;"></p>
+    <p id="errorCodeP" style="text-align:center; color: #C70039;"></p>
 </body>
 
 </html>
